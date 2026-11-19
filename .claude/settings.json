@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Bash(dbt compile *)", "Bash(dbt parse *)", "Bash(dbt ls *)",
+      "PowerShell(dbt compile *)", "PowerShell(dbt parse *)", "PowerShell(dbt ls *)"
+    ],
+    "ask": [
+      "Bash(dbt build *)", "Bash(dbt run *)", "Bash(dbt test *)", "Bash(bq *)",
+      "Bash(git commit *)", "Bash(git push *)",
+      "PowerShell(dbt build *)", "PowerShell(dbt run *)", "PowerShell(dbt test *)", "PowerShell(bq *)",
+      "PowerShell(git commit *)", "PowerShell(git push *)"
+    ],
+    "deny": [
+      "Bash(dbt * --full-refresh*)", "PowerShell(dbt * --full-refresh*)",
+      "Bash(dbt * -f*)", "PowerShell(dbt * -f*)",
+      "Read(~/AppData/Roaming/gcloud/**)"
+    ]
+  }
+}
