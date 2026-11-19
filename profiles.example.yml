@@ -1,0 +1,18 @@
+# Skopiuj do profiles.yml (jest w .gitignore):  Copy-Item profiles.example.yml profiles.yml
+# Logowanie przez ADC (gcloud auth application-default login) - brak kluczy w repo.
+ga4_platform:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: ga4-dbt-platform
+      dataset: dev              # dbt doklei schema z modelu -> dev_bronze, dev_silver...
+      location: US              # musi pasowac do zrodla (bigquery-public-data jest w US)
+      threads: 4
+      priority: interactive
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      # Bezpiecznik per zapytanie: ~5 GB. Pelny build bronze = 3,58 GB (dry run).
+      # Zapytanie, ktore przekroczy limit, konczy sie bledem zamiast rachunkiem.
+      maximum_bytes_billed: 5000000000

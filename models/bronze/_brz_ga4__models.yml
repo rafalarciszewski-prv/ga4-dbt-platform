@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: brz_ga4__events
+    description: Surowe eventy GA4 1:1, partycjonowane po event_date, klastrowane po event_name i user_pseudo_id.
+    columns:
+      - name: event_date
+        data_tests: [not_null]
+      - name: event_name
+        data_tests: [not_null]
+      - name: user_pseudo_id
+        data_tests: [not_null]
