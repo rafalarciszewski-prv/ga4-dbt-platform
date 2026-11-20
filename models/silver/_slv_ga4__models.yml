@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: slv_ga4__events
+    description: Eventy GA4, 1 wiersz = 1 event. Parametry wyciagniete z event_params, typy ujednolicone, klucze eventu i sesji.
+    columns:
+      - name: event_key
+        description: Klucz zastepczy eventu - hash z user_pseudo_id, event_timestamp, event_name.
+        data_tests: [unique, not_null]
+      - name: session_key
+        description: user_pseudo_id + ga_session_id.
+        data_tests: [not_null]
+      - name: event_date
+        data_tests: [not_null]
+      - name: event_name
+        data_tests: [not_null]
