@@ -11,6 +11,9 @@ vars:
   # Zakres shardow events_YYYYMMDD. Do taniego testu: --vars "{ga4_end: '20201107'}"
   ga4_start: "20201101"
   ga4_end: "20210131"
+  # Wlasne domeny (male litery) - pomijane przy ustalaniu zrodla sesji (self-referral).
+  # Pasuje domena dokladnie albo jej subdomena (shop.<domena>).
+  ga4_own_domains: ['googlemerchandisestore.com']
 
 models:
   ga4_platform:

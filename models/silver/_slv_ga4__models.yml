@@ -27,9 +27,33 @@ models:
       - name: transaction_date
         data_tests: [not_null]
       - name: session_key
-        data_tests: [not_null]
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('slv_ga4__sessions')
+                field: session_key
       - name: revenue
         description: Wartosc z parametru value (NUMERIC).
         data_tests: [not_null]
       - name: purchase_event_count
         description: Liczba eventow purchase z tym transaction_id przed deduplikacja (audyt; >1 = podwojne wyslanie).
+  - name: slv_ga4__sessions
+    description: >
+      Sesje GA4, 1 wiersz = 1 session_key (user_pseudo_id + ga_session_id). Start = pierwszy event
+      (session_start brakuje w ok. 1,2% sesji). session_date = min(event_date), czyli strefa czasowa uslugi GA4 -
+      w gold nie licz daty z session_start_ts (UTC). Sesja przez polnoc liczy sie w dniu startu (GA4 UI liczy ja w obu dniach).
+      Zrodlo: pierwsza para source/medium bez wlasnych domen (var ga4_own_domains) i bez (direct);
+      (direct) tylko gdy nie ma innego zrodla; inaczej '(not set)'. first_source_raw/first_medium_raw bez filtra - do audytu.
+      Przychod z slv_ga4__transactions; sesje bez zakupu maja 0. Sesje na krawedziach zakresu dat moga byc niepelne.
+    columns:
+      - name: session_key
+        data_tests: [unique, not_null]
+      - name: session_date
+        data_tests: [not_null]
+      - name: session_start_ts
+        data_tests: [not_null]
+      - name: session_source
+        data_tests: [not_null]
+      - name: session_revenue
+        data_tests: [not_null]      
