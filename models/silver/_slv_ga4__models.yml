@@ -14,3 +14,22 @@ models:
         data_tests: [not_null]
       - name: event_name
         data_tests: [not_null]
+
+  - name: slv_ga4__transactions
+    description: >
+      Transakcje GA4, 1 wiersz = 1 transaction_id. Deduplikacja podwojnie wyslanych eventow purchase
+      (zostaje pierwszy po czasie). Przychod z parametru value - w probce ecommerce.purchase_revenue
+      jest zaokraglony do pelnych jednostek, a ecommerce.transaction_id jest pusty.
+    columns:
+      - name: transaction_id
+        description: Identyfikator transakcji z parametru transaction_id.
+        data_tests: [unique, not_null]
+      - name: transaction_date
+        data_tests: [not_null]
+      - name: session_key
+        data_tests: [not_null]
+      - name: revenue
+        description: Wartosc z parametru value (NUMERIC).
+        data_tests: [not_null]
+      - name: purchase_event_count
+        description: Liczba eventow purchase z tym transaction_id przed deduplikacja (audyt; >1 = podwojne wyslanie).
