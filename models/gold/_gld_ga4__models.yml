@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: gld_ga4__sessions_by_source
+    description: >
+      Sesje wg reguly z Time S.A. (Bank casow B10), 1 wiersz = 1 sesja w obrebie doby uzytkownika
+      (user_pseudo_id + event_date + numer). Wszystkie eventy uzytkownika z dnia to jeden ciag, ponad granicami sesji GA4.
+      Nowa sesja: pierwszy event dnia albo page_view z referrerem spoza wlasnych domen, z para z listy
+      gld_priority_sources albo (direct) na stronie glownej (gld_homepages), przy zmianie pary wzgledem
+      poprzedniej odslony dnia lub na pierwszej odslonie nowej sesji GA4 (wariant C). Czas przerwy nie ma znaczenia.
+      Granica doby = swiadomy kompromis (sesje sumuja sie miedzy dniami). Zrodlo: para wejscia; sesja otwarta
+      pierwszym eventem dnia dostaje zrodlo regula B z silver. ga4_session_count = ile sesji GA4 ma eventy w tej sesji.
+    columns:
+      - name: session_key
+        data_tests: [unique, not_null]
+      - name: session_date
+        data_tests: [not_null]
+      - name: opened_by
+        description: first_event_of_day / priority_source / direct_homepage - czym otwarta sesja.
+        data_tests: [not_null]
+      - name: session_source
+        data_tests: [not_null]
+      - name: session_revenue
+        data_tests: [not_null]

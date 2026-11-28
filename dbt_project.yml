@@ -14,6 +14,10 @@ vars:
   # Wlasne domeny (male litery) - pomijane przy ustalaniu zrodla sesji (self-referral).
   # Pasuje domena dokladnie albo jej subdomena (shop.<domena>).
   ga4_own_domains: ['googlemerchandisestore.com']
+  # Gold, model sesji z Time (B10): pary 'source / medium' (male litery), ktore otwieraja nowa sesje.
+  gld_priority_sources: ['google / organic', 'google / cpc', 'bing / organic', '<other> / organic']
+  # Strony glowne (adres bez parametrow, male litery): (direct) na stronie glownej tez otwiera sesje.
+  gld_homepages: ['https://www.googlemerchandisestore.com/', 'https://shop.googlemerchandisestore.com/']
 
 models:
   ga4_platform:
@@ -22,4 +26,7 @@ models:
       +materialized: table
     silver:
       +schema: silver
+      +materialized: table
+    gold:
+      +schema: gold
       +materialized: table
